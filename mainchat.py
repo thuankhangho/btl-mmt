@@ -25,7 +25,7 @@ class Peer(QtWidgets.QMainWindow):
         self.serverIP=serverIP
         self.timer = QTimer()
         self.timer.timeout.connect(self.refresh)
-        self.timer.start(10000)
+        #self.timer.start(10000)
         #Slot 0 bắt buộc phải là của server
 
         print("Start Client....")
@@ -33,7 +33,7 @@ class Peer(QtWidgets.QMainWindow):
         client_socket.connect((self.serverIP, 8082))
 
         message = {}
-        message["method"] = "show"
+        message["method"] = "show" #lấy danh sách friend
         message["id"]=self.id
         message["ip"]=socket.gethostbyname(socket.gethostname())
 
@@ -94,7 +94,7 @@ class Peer(QtWidgets.QMainWindow):
         self.show()
         
     
-    def closeEvent(self,event):
+    def closeEvent(self,event): #đóng ứng dụng chat hoặc tắt server
         for keys in self.connection.keys():
             self.connection[keys].close()
             self.connection.pop(keys)
@@ -119,7 +119,7 @@ class Peer(QtWidgets.QMainWindow):
         self.serverSocket.close()
 
     #############################################################################
-    ###############################   Listenner   ###############################
+    ###############################   Listener   ###############################
     #############################################################################
     def service(self,tupleConnAndAddr):
         print("Nhận được")
@@ -131,10 +131,7 @@ class Peer(QtWidgets.QMainWindow):
         res=[x for x in self.friends if x[2]==addr[0]]
         if(res!=[]):
             sentence=connectionSocket.recv(1024).decode()
-            ###########Bảo#################
-            if (sentence=="#SERVER#"):
-                pass
-            elif(sentence=="#CHAT#"):
+            if(sentence=="#CHAT#"):
                 conn=Connection(res[0],connectionSocket,0)
                 conn.rmvConn.connect(self.removeConnection)
                 conn.render()
@@ -445,7 +442,7 @@ class Peer(QtWidgets.QMainWindow):
     ##Button Function
     def connect(self,arr):
         serverIP=arr[2]
-        serverPort=12000
+        serverPort=12000 #p2p port
         cilentSocket=socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         try:
             cilentSocket.connect((serverIP,serverPort))

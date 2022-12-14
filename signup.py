@@ -6,7 +6,7 @@ import socket, pickle
 from subprocess import call
 
 HEADER_LENGTH = 10
-serverIP="192.168.226.188"
+serverIP="192.168.43.85"
 
 class Ui_SignUp(object):
     def setupUi(self, SignUp):
@@ -101,10 +101,10 @@ class Ui_SignUp(object):
         mess = QMessageBox()
         if self.Fullname.text() == "" or self.Username.text() == "" or self.Password.text() == "":
             mess.setIcon(QMessageBox.Warning)
-            mess.setText("You need enter all the above information!")
+            mess.setText("You need to enter all the above information!")
             mess.exec_()
         else:
-            print("Start Client....")
+            print("Starting Client...")
             client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             client_socket.connect((serverIP, 8082))
             hostname = socket.gethostname()
@@ -131,7 +131,7 @@ class Ui_SignUp(object):
             if (response == "Not"):
                 mess = QMessageBox()
                 mess.setIcon(QMessageBox.Warning)
-                mess.setText("Invalid User Name And Password")
+                mess.setText("Account already existed!")
                 mess.exec_()
             else:
                 self.SignUp.close()
@@ -140,10 +140,6 @@ class Ui_SignUp(object):
             client_socket.close()
 
             print("End Client....")
-
-            # mess.setText("Done")
-            # mess.exec_()
-            # Nhap code o day
 
 
 if __name__ == "__main__":

@@ -200,8 +200,9 @@ class Ui_LogIn(object):
         self.BtExit.clicked.connect(self.exit)
         self.BtSignIn.clicked.connect(self.signin)
         self.BtSignUp.clicked.connect(self.signup)
+    #To do: tách signin, signup & exit ra khỏi
 
-    def signin(self):
+    def signin(self): 
         print("Signin")
         if self.Username.text() == "" or self.Password.text() == "":
             mess = QMessageBox()
@@ -231,14 +232,14 @@ class Ui_LogIn(object):
             
             client_socket.send(msg)
 
-            text = client_socket.recv(1024)
+            text = client_socket.recv(1024) #1MB làm buffer cho msg
             response = text.decode()
             print(response) 
 
             if (response == "Not"):
                 mess = QMessageBox()
                 mess.setIcon(QMessageBox.Warning)
-                mess.setText("Invalid User Name And Password")
+                mess.setText("Invalid Username & Password")
                 mess.exec_()
             else:
                 self.LogIn.close()

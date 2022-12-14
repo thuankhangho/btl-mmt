@@ -24,8 +24,8 @@ server_socket.bind((HOST, PORT))
 server_socket.listen(5)
 print('Start Server...')
 
-def server_login(message):
-    cur.execute("select * from user where username=%s and password = %s and status = 1",
+def server_login(message): #đăng nhập vào server
+    cur.execute("SELECT * FROM user WHERE username = %s AND password = %s", #xóa status bởi vì không ai quan tâm
                 (message["user_name"], message["password"]))
     row = cur.fetchone()
 
@@ -33,29 +33,30 @@ def server_login(message):
         text = "Not"
         connection_socket.send(text.encode())
     else:
-        cur.execute("UPDATE user SET IP = %s WHERE username = %s and password = %s", (message["ip"], message["user_name"], message["password"]))
+        cur.execute("UPDATE user SET IP = %s WHERE username = %s AND password = %s", (message["ip"], message["user_name"], message["password"]))
         con.commit()
-        cur.execute("SELECT * FROM user WHERE username = %s and password = %s", (message["user_name"], message["password"]))
+        cur.execute("SELECT * FROM user WHERE username = %s AND password = %s", (message["user_name"], message["password"]))
         row = cur.fetchone()
-        print(row[0])
+        print(row[0]) #row[0] là id của user mới đăng nhập
         text = str(row[0])
         connection_socket.send(text.encode())
 
-def server_show(message):
+def server_show(message): #hiển thị danh sách bạn
     # cur.execute("select id, name, IP, image from user")
-    cur.execute("select id, name, IP, image from user where id in (select friend_user_id from friend where user_id = %s) and IP != '0.0.0.0'", (message["id"]))
+    cur.execute("SELECT id, name, IP, image FROM user WHERE id IN (SELECT friend_user_id FROM friend WHERE user_id = %s) AND IP != '0.0.0.0'",
+                (message["id"]))
     rows = cur.fetchall()
     lists = [list(x) for x in rows]
     jsonStr = json.dumps(lists)
 
     # data = message.encode()
     # connection_socket.send(data)
-    send_text(connection_socket, jsonStr)
+    send_text(connection_socket, jsonStr) #gửi lại client
 
 def server_signup(message):
     cur.execute("select * from user where username = %s", (message["user_name"]))
     row = cur.fetchone()
-    if row == None:
+    if row == None: #check xem có tồn tại user hay không
         cur.execute("INSERT INTO user (name, username, password, IP, status, image) values (%s, %s, %s, %s, 1, 'https://genk.mediacdn.vn/k:thumb_w/640/2016/photo-1-1473821552147/top6suthatcucsocvepikachu.jpg')", (message["name"], message["user_name"], message["password"], message["ip"]))
         con.commit()
         text = "Ok"
@@ -73,7 +74,7 @@ def server_logout(mess):
     con.commit()
 
 def server_showall(mess):
-    cur.execute("select id, name, IP, image from user where id != %s AND id not in (select friend_user_id from friend where user_id=%s)", (mess["id"],mess["id"]))
+    cur.execute("SELECT id, name, IP, image FROM user WHERE id != %s AND id NOT IN (select friend_user_id from friend where user_id=%s)", (mess["id"],mess["id"]))
     rows = cur.fetchall()
     lists = [list(x) for x in rows]
     jsonStr = json.dumps(lists)
@@ -94,7 +95,7 @@ def server_addfriend(message, connect_socket2):
     cur.execute("insert into friend (user_id, friend_user_id) values (%s, %s)", (row[0], message["id"]))
     con.commit()
     print("Add successfully!!")
-    connect_socket2.send("hello".encode())
+    # connect_socket2.send("hello".encode())
 
 
 while 1:

@@ -9,29 +9,21 @@ from connect import *
 class Listenner(QObject):
     catchConnection=Signal(object)
     
-
     def __init__(self,conn):
         super().__init__()
         self.connection=conn
     
     def listenWrapper(self):
         self.listen()
-
-    
-
+        
     @Slot(object)
     def listen(self):
-        print("Listenning")
-        connectionSocket, addr = self.connection.accept()
+        print("Listening")
+        connectionSocket, addr = self.connection.accept() #đợi peer khác connect với nó
         endConn=False
         if(addr[0]==socket.gethostbyname(socket.gethostname())):
             endConn=True
         self.catchConnection.emit((connectionSocket,addr,endConn))
-    
-    
-    
-    def printss(self):
-        print("Hi")
 
 class Catcher(QObject):
     shutdown=Signal(bool)
@@ -43,7 +35,6 @@ class Catcher(QObject):
     
     def catchMsgWrapper(self):
         self.catchMsg()
-
 
     fileOK=Signal(bool)
     dataDone=Signal(bool)
