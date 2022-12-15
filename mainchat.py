@@ -68,12 +68,13 @@ class Peer(QtWidgets.QMainWindow):
         client_socket.close()
 
         ####Init Listener####
-        self.serverPort = 12000
+        self.serverPort = 12000 #yes this is port p2p, đ đính dáng j server
         self.serverSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
         self.serverSocket.bind(('', self.serverPort))
         self.serverSocket.listen(5)
 
+        #tạo thread ms
         self.listener = Listener(self.serverSocket)
         self.listenThread = QThread()
         self.listener.moveToThread(self.listenThread)
