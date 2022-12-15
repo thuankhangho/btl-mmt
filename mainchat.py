@@ -16,7 +16,7 @@ from UI_listfriend import *
 
 HEADER_LENGTH = 10
     
-class Peer(QtWidgets.QMainWindow):
+class Peer(QtWidgets.QMainWindow): 
     startListen = Signal(bool)
     def __init__(self, id, username, serverIP):
         super().__init__()
@@ -26,18 +26,15 @@ class Peer(QtWidgets.QMainWindow):
         self.timer = QTimer()
         self.timer.timeout.connect(self.refresh)
         #self.timer.start(10000)
-        
-        #Slot 0 bắt buộc phải là của server
 
-        print("Start Client....")
+        print("Starting 'Client'....")
         client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         client_socket.connect((self.serverIP, 8082))
         
-        #lấy danh sách friend
         message = {}
         message["method"] = "show" 
-        message["id"]=self.id
-        message["ip"]=socket.gethostbyname(socket.gethostname())
+        message["id"] = self.id
+        message["ip"] = socket.gethostbyname(socket.gethostname())
 
         msg = pickle.dumps(message)
         msg = bytes(f"{len(msg):<{HEADER_LENGTH}}", "utf-8") + msg
@@ -49,17 +46,17 @@ class Peer(QtWidgets.QMainWindow):
         print(mes)
         print(type(mes))
         
-        self.friends=[[0,'Server',self.serverIP,""]]
-        if(mes!="[]"):
-            arr=mes.split("], [")
-            arr[0]=arr[0][2:]
-            arr[-1]=arr[-1][:-2]
+        self.friends=[[0,'Server', self.serverIP, ""]]
+        if(mes != "[]"):
+            arr = mes.split("], [")
+            arr[0] = arr[0][2:]
+            arr[-1] = arr[-1][:-2]
             
             for i in range(len(arr)):
-                arr[i]=arr[i].split(', ')
+                arr[i] = arr[i].split(', ')
                 for ii in range(4):
-                    arr[i][ii]=arr[i][ii].strip("\"")
-                arr[i][0]=i+1
+                    arr[i][ii] = arr[i][ii].strip("\"")
+                arr[i][0] = i + 1
                 
             for user in arr:
                 self.friends.append(user)
@@ -70,88 +67,83 @@ class Peer(QtWidgets.QMainWindow):
 
         client_socket.close()
 
-        
-        
-        ####Init Listenner####
-        self.serverPort=12000
-        self.serverSocket=socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        ####Init Listener####
+        self.serverPort = 12000
+        self.serverSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-        self.serverSocket.bind(('',self.serverPort))
+        self.serverSocket.bind(('', self.serverPort))
         self.serverSocket.listen(5)
 
-        self.listenner=Listener(self.serverSocket)
-        self.listenThread=QThread()
-        self.listenner.moveToThread(self.listenThread)
+        self.listener = Listener(self.serverSocket)
+        self.listenThread = QThread()
+        self.listener.moveToThread(self.listenThread)
 
-        self.listenner.catchConnection.connect(self.service)
-        self.startListen.connect(self.listenner.listenWrapper)
+        self.listener.catchConnection.connect(self.service)
+        self.startListen.connect(self.listener.listenWrapper)
 
         self.listenThread.start()
         self.startListen.emit(True)
         #######################
 
         #######################
-        self.connection={}
+        self.connection = {}
         self.setupUi()
         self.show()
         
     
-    def closeEvent(self,event): #đóng ứng dụng chat hoặc tắt server
+    def closeEvent(self, event): #đóng ứng dụng chat hoặc tắt server
         for keys in self.connection.keys():
             self.connection[keys].close()
             self.connection.pop(keys)
-
+        print("Yeet")
         client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         client_socket.connect((self.serverIP, 8082))
 
         message = {}
         message["method"] = "logout"
-        message["id"]=self.id
+        message["id"] = self.id
         msg = pickle.dumps(message)
         msg = bytes(f"{len(msg):<{HEADER_LENGTH}}", "utf-8") + msg
         client_socket.send(msg)
         client_socket.close()
 
-        selfIP=socket.gethostbyname(socket.gethostname())
-        selfPort=12000
-        selfSocket=socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        selfIP = socket.gethostbyname(socket.gethostname())
+        selfPort = 12000
+        selfSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         selfSocket.connect((selfIP,selfPort))
         selfSocket.close()
         time.sleep(1)
         self.serverSocket.close()
 
     #############################################################################
-    ###############################   Listener   ###############################
+    ###############################   Listener   ################################
     #############################################################################
-    def service(self,tupleConnAndAddr):
-        print("Nhận được")
-        connectionSocket=tupleConnAndAddr[0]
-        addr=tupleConnAndAddr[1]
-        endCond=tupleConnAndAddr[2]
+    def service(self, tupleConnAndAddr):
+        print("Loading...")
+        connectionSocket = tupleConnAndAddr[0]
+        addr = tupleConnAndAddr[1]
+        endCond = tupleConnAndAddr[2]
         if endCond: return
 
-        res=[x for x in self.friends if x[2]==addr[0]]
-        if(res!=[]):
-            sentence=connectionSocket.recv(1024).decode()
-            if(sentence=="#CHAT#"):
-                conn=Connection(res[0],connectionSocket,0)
+        res = [x for x in self.friends if x[2] == addr[0]]
+        if (res != []):
+            sentence = connectionSocket.recv(1024).decode()
+            if (sentence == "#CHAT#"):
+                conn = Connection(res[0], connectionSocket, 0)
                 conn.rmvConn.connect(self.removeConnection)
                 conn.render()
-                self.connection[addr[0]]=conn
+                self.connection[addr[0]] = conn
                 print(self.connection)
         else:
             connectionSocket.close()
         self.startListen.emit(True)
 
-    def removeConnection(self,addr):
+    def removeConnection(self, addr):
         print(addr)
         self.connection.pop(addr)
     #############################################################################
     ##################################   UI   ###################################
     #############################################################################
-        
-        
-
     def setupUi(self):
         self.setObjectName("AppChat")
         self.resize(500, 675)
@@ -409,18 +401,15 @@ class Peer(QtWidgets.QMainWindow):
 
         self.retranslateUi()
         QtCore.QMetaObject.connectSlotsByName(self)
-
     def retranslateBt(self,arr):
         _translate = QtCore.QCoreApplication.translate
         self.removeList[arr[0]-1].setText(_translate("AppChat", "Remove"))
         self.chatList[arr[0]-1].setText(_translate("AppChat", "Chat"))
-        if(arr[1]==''):
+        if (arr[1] == ''):
             self.name[arr[0]-1].setText(_translate("AppChat", 'Hãy kiếm thêm bạn'))
         else:
             self.name[arr[0]-1].setText(_translate("AppChat", arr[1]))
         self.OnOffList[arr[0]-1].setText(_translate("AppChat", "Online"))
-
-
     def retranslateUi(self):
         _translate = QtCore.QCoreApplication.translate
         self.setWindowTitle(_translate("AppChat", "Appchat"))
@@ -437,14 +426,10 @@ class Peer(QtWidgets.QMainWindow):
         self.actionLogin.setText(_translate("AppChat", "Logout"))
         self.actionInformation.setText(_translate("AppChat", "Information"))
         self.pushButton_2.setText(_translate("AppChat", "Refresh"))
-    
-
-
-
     ##Button Function
-    def connect(self,arr):
-        serverIP=arr[2]
-        serverPort=12000 #p2p port
+    def connect(self, arr):
+        serverIP = arr[2]
+        serverPort = 12000 #p2p port
         cilentSocket=socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         try:
             cilentSocket.connect((serverIP,serverPort))
@@ -620,7 +605,7 @@ class Peer(QtWidgets.QMainWindow):
                 ImageReal_8.setScaledContents(True)
             else:
                 ImageReal_8.setStyleSheet("border-image: url(./image/addfriend.png)")
-            ImageReal_8.setObjectName("ImageReal"+str(arr[0]))
+            ImageReal_8.setObjectName("ImageReal" + str(arr[0]))
             ImageReal_8.raise_()
             horizontalLayout29.addWidget(ImageReal_8)
 

@@ -23,7 +23,7 @@ class Connection(QtWidgets.QMainWindow):
         self.arr=arr
 
         ###############
-        #Setup Listenner for friend
+        #Setup Listener for friend
         ###############
         self.catcher=Catcher(self.cilentSocket)
         self.catchThread=QThread()

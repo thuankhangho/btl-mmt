@@ -9,10 +9,10 @@ import pickle
 
 HEADER_LENGTH = 10
 
-serverIP="192.168.226.188"
+serverIP = "192.168.1.18"
 
 class Ui_LogIn(object):
-
+    #UI 'til line 202
     def setupUi(self, LogIn):
         LogIn.setObjectName("LogIn")
         LogIn.resize(850, 750)
@@ -181,10 +181,9 @@ class Ui_LogIn(object):
 
         self.retranslateUi(LogIn)
         QtCore.QMetaObject.connectSlotsByName(LogIn)
-
     def retranslateUi(self, LogIn):
         _translate = QtCore.QCoreApplication.translate
-        LogIn.setWindowTitle(_translate("LogIn", "Form"))
+        LogIn.setWindowTitle(_translate("LogIn", "Log in"))
         self.Title.setText(_translate("LogIn", "LOG IN"))
         self.Username.setPlaceholderText(_translate("LogIn", "Username"))
         self.Password.setPlaceholderText(_translate("LogIn", "Password"))
@@ -192,34 +191,30 @@ class Ui_LogIn(object):
         self.BtForgotPassword.setText(_translate(
             "LogIn", "Forgot your Usename or Password?"))
         self.BtSignUp.setText(_translate("LogIn", "Sign Up"))
-        self.Txtnameapp.setText(_translate("LogIn", "CHATVUIVE"))
-        self.Txthello1.setText(_translate("LogIn", "Hi, we are CHATVUIVE"))
+        self.Txtnameapp.setText(_translate("LogIn", "ChatWithChad"))
+        self.Txthello1.setText(_translate("LogIn", "Hi, we are ChatWithChad!"))
         self.Txthello2.setText(_translate("LogIn", "Welcome to our app!"))
-        self.Txthello3.setText(_translate(
-            "LogIn", "Have a good day with your friend!"))
+        self.Txthello3.setText(_translate("LogIn", "Have a good day with your chad!"))
         self.BtExit.clicked.connect(self.exit)
         self.BtSignIn.clicked.connect(self.signin)
         self.BtSignUp.clicked.connect(self.signup)
-    #To do: tách signin, signup & exit ra khỏi
-
+    
     def signin(self): 
-        print("Signin")
+        print("Signing in...")
         if self.Username.text() == "" or self.Password.text() == "":
             mess = QMessageBox()
             mess.setIcon(QMessageBox.Warning)
-            mess.setText("Enter User Name And Password")
+            mess.setText("Please make sure to fill in both your Username and Password correctly!")
             mess.exec_()
         else:
-            print("Start Client....")
+            print("Starting Client...")
             client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-
             client_socket.connect((serverIP, 8082))
-            print("Sending")
             
             hostname = socket.gethostname()
             ip_address = socket.gethostbyname(hostname)
-            print(hostname)
-            print(ip_address)
+            
+            print("Sending from " + hostname + " with IP address " + ip_address)
 
             message = {}
             message["method"] = "login"
@@ -234,7 +229,6 @@ class Ui_LogIn(object):
 
             text = client_socket.recv(1024) #1MB làm buffer cho msg
             response = text.decode()
-            print(response) 
 
             if (response == "Not"):
                 mess = QMessageBox()
@@ -243,11 +237,11 @@ class Ui_LogIn(object):
                 mess.exec_()
             else:
                 self.LogIn.close()
-                call(["python", "mainchat.py",response,self.Username.text(),serverIP])
+                call(["python", "mainchat.py", response, self.Username.text(), serverIP])
 
             client_socket.close()
 
-            print("End Client....")
+            print("Ending Client....")
 
     def signup(self):
         self.LogIn.close()

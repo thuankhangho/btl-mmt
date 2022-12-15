@@ -4,11 +4,12 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QMessageBox
 import socket, pickle
 from subprocess import call
+from app import serverIP
 
 HEADER_LENGTH = 10
-serverIP="192.168.43.85"
 
 class Ui_SignUp(object):
+    #UI 'til line 100
     def setupUi(self, SignUp):
         SignUp.setObjectName("SignUp")
         SignUp.resize(482, 379)
@@ -80,7 +81,6 @@ class Ui_SignUp(object):
 
         self.retranslateUi(SignUp)
         QtCore.QMetaObject.connectSlotsByName(SignUp)
-
     def retranslateUi(self, SignUp):
         _translate = QtCore.QCoreApplication.translate
         SignUp.setWindowTitle(_translate("SignUp", "SignUp"))
@@ -96,21 +96,21 @@ class Ui_SignUp(object):
             _translate("SignUp", "Enter your account"))
         self.btSignUp.setText(_translate("SignUp", "SIGN UP"))
         self.btSignUp.clicked.connect(self.signup)
-
+    
     def signup(self):
         mess = QMessageBox()
         if self.Fullname.text() == "" or self.Username.text() == "" or self.Password.text() == "":
             mess.setIcon(QMessageBox.Warning)
-            mess.setText("You need to enter all the above information!")
+            mess.setText("You need to fill in all the blank!")
             mess.exec_()
         else:
             print("Starting Client...")
             client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             client_socket.connect((serverIP, 8082))
             hostname = socket.gethostname()
-            ip_address = socket.gethostbyname(hostname)
-            print(hostname)
-            print(ip_address)
+            ip_address = socket.gethostbyname(hostname)            
+            
+            print("Sending from " + hostname + " with IP address " + ip_address)
 
             message = {}
             message["method"] = "signup"
@@ -126,12 +126,11 @@ class Ui_SignUp(object):
 
             text = client_socket.recv(1024)
             response = text.decode()
-            print(response)
 
             if (response == "Not"):
                 mess = QMessageBox()
                 mess.setIcon(QMessageBox.Warning)
-                mess.setText("Account already existed!")
+                mess.setText("Account has already existed!")
                 mess.exec_()
             else:
                 self.SignUp.close()
@@ -139,7 +138,7 @@ class Ui_SignUp(object):
 
             client_socket.close()
 
-            print("End Client....")
+            print("Ending Client....")
 
 
 if __name__ == "__main__":
