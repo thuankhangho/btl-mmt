@@ -9,7 +9,7 @@ import pickle
 
 HEADER_LENGTH = 10
 
-serverIP = "192.168.1.18"
+serverIP = "192.168.1.121"
 
 class Ui_LogIn(object):
     #UI 'til line 202
