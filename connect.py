@@ -12,8 +12,8 @@ from listener import *
     
 
 class Connection(QtWidgets.QMainWindow):
-    startCatching=Signal(bool)
-    rmvConn=Signal(str)
+    startCatching = Signal(bool)
+    rmvConn = Signal(str)
 
     def __init__(self,arr,conn,client):
         super().__init__()
@@ -25,8 +25,8 @@ class Connection(QtWidgets.QMainWindow):
         ###############
         #Setup Listener for friend
         ###############
-        self.catcher=Catcher(self.cilentSocket)
-        self.catchThread=QThread()
+        self.catcher = Catcher(self.cilentSocket)
+        self.catchThread = QThread()
         self.catcher.moveToThread(self.catchThread)
 
         self.catcher.shutdown.connect(self.close)

@@ -423,8 +423,8 @@ class Peer(QtWidgets.QMainWindow):
         self.OnOffList[arr[0] - 1].setText(_translate("AppChat", "Online"))
     def retranslateUi(self):
         _translate = QtCore.QCoreApplication.translate
-        self.setWindowTitle(_translate("AppChat", "Appchat"))
-        self.SetPicture.setText(_translate("AppChat", "   SET PICTURE"))
+        self.setWindowTitle(_translate("AppChat", "ChatWithChad"))
+        self.SetPicture.setText(_translate("AppChat", "SET PICTURE"))
         self.Username.setText(_translate("AppChat", self.user))
         self.Status.setItemText(0, _translate("AppChat", "Online"))
         self.Status.setItemText(1, _translate("AppChat", "Busy"))

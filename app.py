@@ -207,6 +207,7 @@ class Ui_LogIn(object):
             mess.setText("Please make sure to fill in both your Username and Password correctly!")
             mess.exec_()
         else:
+            #kết nối với server check username vs password
             print("Starting Client...")
             client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             client_socket.connect((serverIP, 8082))

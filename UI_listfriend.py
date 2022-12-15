@@ -183,18 +183,19 @@ class UI_AddFriend(QtWidgets.QMainWindow):
 
     def retranslateUi(self, Addfriend):
         _translate = QtCore.QCoreApplication.translate
-        Addfriend.setWindowTitle(_translate("Addfriend", "Addfriend"))
+        Addfriend.setWindowTitle(_translate("Addfriend", "Add some chads!"))
         self.Add.setText(_translate("Addfriend", "Add"))
 
     
-    def addfriend(self,arr):
+    def addfriend(self, arr):
+        #kết nối với server
         client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         client_socket.connect((self.serverIP, 8082))
 
         message = {}
         message["method"] = "addfriend"
-        message["id"]=self.id
-        message["friend_name"]=arr[1]
+        message["id"] = self.id
+        message["friend_name"] = arr[1]
 
         msg = pickle.dumps(message)
         msg = bytes(f"{len(msg):<{HEADER_LENGTH}}", "utf-8") + msg
