@@ -8,32 +8,34 @@ from subprocess import call
 import requests
 
 import sys
-from connect import *
-from listenner import *
 import pickle
+from connect import *
+from listener import *
 from UI_listfriend import *
 
 
 HEADER_LENGTH = 10
     
 class Peer(QtWidgets.QMainWindow):
-    startListen=Signal(bool)
-    def __init__(self,id,username,serverIP):
+    startListen = Signal(bool)
+    def __init__(self, id, username, serverIP):
         super().__init__()
-        self.id=id
-        self.user=username
-        self.serverIP=serverIP
+        self.id = id
+        self.user = username
+        self.serverIP = serverIP
         self.timer = QTimer()
         self.timer.timeout.connect(self.refresh)
         #self.timer.start(10000)
+        
         #Slot 0 bắt buộc phải là của server
 
         print("Start Client....")
         client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         client_socket.connect((self.serverIP, 8082))
-
+        
+        #lấy danh sách friend
         message = {}
-        message["method"] = "show" #lấy danh sách friend
+        message["method"] = "show" 
         message["id"]=self.id
         message["ip"]=socket.gethostbyname(socket.gethostname())
 
@@ -77,7 +79,7 @@ class Peer(QtWidgets.QMainWindow):
         self.serverSocket.bind(('',self.serverPort))
         self.serverSocket.listen(5)
 
-        self.listenner=Listenner(self.serverSocket)
+        self.listenner=Listener(self.serverSocket)
         self.listenThread=QThread()
         self.listenner.moveToThread(self.listenThread)
 

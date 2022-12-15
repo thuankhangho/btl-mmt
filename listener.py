@@ -6,7 +6,7 @@ import os
 from connect import *
 
 
-class Listenner(QObject):
+class Listener(QObject):
     catchConnection=Signal(object)
     
     def __init__(self,conn):
