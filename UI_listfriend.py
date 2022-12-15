@@ -10,23 +10,24 @@ import pickle
 import sys
 import time
 
-HEADER_LENGTH=10
+HEADER_LENGTH = 10
 
 
 class UI_AddFriend(QtWidgets.QMainWindow):
     def __init__(self,id,serverIP):
+        #kết nối với server để gọi ds fr
         super().__init__()
-        self.id=id
-        self.serverIP=serverIP
+        self.id = id
+        self.serverIP = serverIP
         client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         client_socket.connect((self.serverIP, 8082))
 
-        self.list=[]
+        self.list = []
 
         message = {}
         message["method"] = "showall"
-        message["id"]=self.id
-        message["ip"]=socket.gethostbyname(socket.gethostname())
+        message["id"] = self.id
+        message["ip"] = socket.gethostbyname(socket.gethostname())
 
         msg = pickle.dumps(message)
         msg = bytes(f"{len(msg):<{HEADER_LENGTH}}", "utf-8") + msg
@@ -38,16 +39,16 @@ class UI_AddFriend(QtWidgets.QMainWindow):
         print(mes)
         print(type(mes))
         
-        if(mes!="[]"):
-            arr=mes.split("], [")
-            arr[0]=arr[0][2:]
-            arr[-1]=arr[-1][:-2]
+        if (mes != "[]"):
+            arr = mes.split("], [")
+            arr[0] = arr[0][2:]
+            arr[-1] = arr[-1][:-2]
             
             for i in range(len(arr)):
-                arr[i]=arr[i].split(', ')
+                arr[i] = arr[i].split(', ')
                 for ii in range(4):
-                    arr[i][ii]=arr[i][ii].strip("\"")
-                arr[i][0]=i
+                    arr[i][ii] = arr[i][ii].strip("\"")
+                arr[i][0] = i
                 
             for user in arr:
                 self.list.append(user)
@@ -58,15 +59,11 @@ class UI_AddFriend(QtWidgets.QMainWindow):
 
         client_socket.close()
 
-
         self.render()
 
-
     def render(self):
-        
-        self.setupUi(self,self.list)
+        self.setupUi(self, self.list)
         self.show()
-
 
     def setupUi(self, Addfriend, List):
         Addfriend.setObjectName("Addfriend")
@@ -186,9 +183,8 @@ class UI_AddFriend(QtWidgets.QMainWindow):
         Addfriend.setWindowTitle(_translate("Addfriend", "Add some chads!"))
         self.Add.setText(_translate("Addfriend", "Add"))
 
-    
     def addfriend(self, arr):
-        #kết nối với server
+        #kết nối với server để add bạn theo friend_name
         client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         client_socket.connect((self.serverIP, 8082))
 
@@ -201,14 +197,17 @@ class UI_AddFriend(QtWidgets.QMainWindow):
         msg = bytes(f"{len(msg):<{HEADER_LENGTH}}", "utf-8") + msg
 
         client_socket.send(msg)
+        
         data = client_socket.recv(2048)
         mes = data.decode()
+        
         print(mes)
         print(type(mes))
         client_socket.close()
         self.refresh()
 
     def refresh(self):
+        #kết nối với server để gọi lại ds fr (y chang __init__)
         for outer_frame in self.outer_frameList:
             outer_frame.setParent(None)
         self.outer_frameList.clear()
@@ -223,8 +222,8 @@ class UI_AddFriend(QtWidgets.QMainWindow):
 
         message = {}
         message["method"] = "showall"
-        message["id"]=self.id
-        message["ip"]=socket.gethostbyname(socket.gethostname())
+        message["id"] = self.id
+        message["ip"] = socket.gethostbyname(socket.gethostname())
 
         msg = pickle.dumps(message)
         msg = bytes(f"{len(msg):<{HEADER_LENGTH}}", "utf-8") + msg
@@ -236,16 +235,16 @@ class UI_AddFriend(QtWidgets.QMainWindow):
         print(mes)
         print(type(mes))
         
-        if(mes!="[]"):
-            arr=mes.split("], [")
-            arr[0]=arr[0][2:]
-            arr[-1]=arr[-1][:-2]
+        if (mes != "[]"):
+            arr = mes.split("], [")
+            arr[0] = arr[0][2:]
+            arr[-1] = arr[-1][:-2]
             
             for i in range(len(arr)):
-                arr[i]=arr[i].split(', ')
+                arr[i] = arr[i].split(', ')
                 for ii in range(4):
-                    arr[i][ii]=arr[i][ii].strip("\"")
-                arr[i][0]=i
+                    arr[i][ii] = arr[i][ii].strip("\"")
+                arr[i][0] = i
                 
             for user in arr:
                 self.list.append(user)
@@ -258,10 +257,8 @@ class UI_AddFriend(QtWidgets.QMainWindow):
 
         self.displayUI()
 
-
-
     def displayUI(self):
-        List=self.list
+        List = self.list
         for i in range(len(List)):
             arr = List[i]
             Outer_frame = QtWidgets.QFrame(

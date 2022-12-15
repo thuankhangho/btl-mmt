@@ -17,10 +17,10 @@ class Connection(QtWidgets.QMainWindow):
 
     def __init__(self,arr,conn,client):
         super().__init__()
-        self.sendingData=False
-        self.client=client
-        self.cilentSocket=conn
-        self.arr=arr
+        self.sendingData = False
+        self.client = client
+        self.cilentSocket = conn
+        self.arr = arr
 
         ###############
         #Setup Listener for friend
@@ -40,7 +40,7 @@ class Connection(QtWidgets.QMainWindow):
 
     def dataRes(self,name):
         print("Relistenning")
-        self.displayMsg((f"Received file {name}",2))
+        self.displayMsg((f"Received file {name}", 2))
         self.startCatching.emit(True)    
 
 
@@ -53,7 +53,7 @@ class Connection(QtWidgets.QMainWindow):
     def render(self):
         self.setupUi(self.arr)
         self.show()
-        if(self.client==1):
+        if(self.client == 1):
             self.cilentSocket.send("#CHAT#".encode())
     def setupUi(self,arr):
         self.chat=[]

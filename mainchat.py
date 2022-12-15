@@ -69,7 +69,7 @@ class Peer(QtWidgets.QMainWindow):
 
         ####Init Listener####
         
-        #yes this is port p2p, đ đính dáng j server
+        #yes this is port p2p, not actual server
         self.serverPort = 12000 
         self.serverSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
@@ -81,11 +81,11 @@ class Peer(QtWidgets.QMainWindow):
         self.listenThread = QThread()
         self.listener.moveToThread(self.listenThread)
 
-
+        #kết nối signal với hàm của 2 class Peer và Listener
         self.listener.catchConnection.connect(self.service)
         self.startListen.connect(self.listener.listenWrapper)
 
-        #
+        #bắt đầu chạy thread
         self.listenThread.start()
         self.startListen.emit(True)
         #######################
