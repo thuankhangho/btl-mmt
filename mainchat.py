@@ -68,7 +68,9 @@ class Peer(QtWidgets.QMainWindow):
         client_socket.close()
 
         ####Init Listener####
-        self.serverPort = 12000 #yes this is port p2p, đ đính dáng j server
+        
+        #yes this is port p2p, đ đính dáng j server
+        self.serverPort = 12000 
         self.serverSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
         self.serverSocket.bind(('', self.serverPort))
@@ -79,9 +81,11 @@ class Peer(QtWidgets.QMainWindow):
         self.listenThread = QThread()
         self.listener.moveToThread(self.listenThread)
 
+
         self.listener.catchConnection.connect(self.service)
         self.startListen.connect(self.listener.listenWrapper)
 
+        #
         self.listenThread.start()
         self.startListen.emit(True)
         #######################
@@ -92,14 +96,17 @@ class Peer(QtWidgets.QMainWindow):
         self.show()
         
     
-    def closeEvent(self, event): #đóng ứng dụng chat hoặc tắt server
+    def closeEvent(self, event): 
+        #đóng ứng dụng chat hoặc tắt server
         for keys in self.connection.keys():
             self.connection[keys].close()
             self.connection.pop(keys)
-        print("Yeet")
+        
+        #tạo socket nối đến server
         client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         client_socket.connect((self.serverIP, 8082))
 
+        #thông báo đóng đến server
         message = {}
         message["method"] = "logout"
         message["id"] = self.id
@@ -108,10 +115,13 @@ class Peer(QtWidgets.QMainWindow):
         client_socket.send(msg)
         client_socket.close()
 
+        #tạo socket đến các peer khác
         selfIP = socket.gethostbyname(socket.gethostname())
         selfPort = 12000
         selfSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        selfSocket.connect((selfIP,selfPort))
+        selfSocket.connect((selfIP, selfPort))
+        
+        #đóng các socket
         selfSocket.close()
         time.sleep(1)
         self.serverSocket.close()
@@ -402,15 +412,15 @@ class Peer(QtWidgets.QMainWindow):
 
         self.retranslateUi()
         QtCore.QMetaObject.connectSlotsByName(self)
-    def retranslateBt(self,arr):
+    def retranslateBt(self, arr):
         _translate = QtCore.QCoreApplication.translate
-        self.removeList[arr[0]-1].setText(_translate("AppChat", "Remove"))
-        self.chatList[arr[0]-1].setText(_translate("AppChat", "Chat"))
+        self.removeList[arr[0] - 1].setText(_translate("AppChat", "Remove"))
+        self.chatList[arr[0] - 1].setText(_translate("AppChat", "Chat"))
         if (arr[1] == ''):
-            self.name[arr[0]-1].setText(_translate("AppChat", 'Hãy kiếm thêm bạn'))
+            self.name[arr[0] - 1].setText(_translate("AppChat", 'Hãy kiếm thêm bạn'))
         else:
-            self.name[arr[0]-1].setText(_translate("AppChat", arr[1]))
-        self.OnOffList[arr[0]-1].setText(_translate("AppChat", "Online"))
+            self.name[arr[0] - 1].setText(_translate("AppChat", arr[1]))
+        self.OnOffList[arr[0] - 1].setText(_translate("AppChat", "Online"))
     def retranslateUi(self):
         _translate = QtCore.QCoreApplication.translate
         self.setWindowTitle(_translate("AppChat", "Appchat"))
@@ -685,7 +695,7 @@ class Peer(QtWidgets.QMainWindow):
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
     print(sys.argv)
-    peer=Peer(int(sys.argv[1]),sys.argv[2],sys.argv[3])
+    peer = Peer(int (sys.argv[1]), sys.argv[2], sys.argv[3])
 
     timer = QTimer()
 

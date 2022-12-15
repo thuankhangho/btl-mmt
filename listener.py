@@ -7,23 +7,24 @@ from connect import *
 
 
 class Listener(QObject):
-    catchConnection=Signal(object)
+    catchConnection = Signal(object)
     
-    def __init__(self,conn):
+    def __init__(self, conn):
         super().__init__()
-        self.connection=conn
+        self.connection = conn
     
     def listenWrapper(self):
         self.listen()
         
     @Slot(object)
+    #đợi peer khác connect với nó
     def listen(self):
         print("Listening")
-        connectionSocket, addr = self.connection.accept() #đợi peer khác connect với nó
-        endConn=False
-        if(addr[0]==socket.gethostbyname(socket.gethostname())):
-            endConn=True
-        self.catchConnection.emit((connectionSocket,addr,endConn))
+        connectionSocket, addr = self.connection.accept() 
+        endConn = False
+        if (addr[0] == socket.gethostbyname(socket.gethostname())):
+            endConn = True
+        self.catchConnection.emit((connectionSocket, addr, endConn))
 
 class Catcher(QObject):
     shutdown=Signal(bool)

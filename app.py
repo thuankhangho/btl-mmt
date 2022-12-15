@@ -198,7 +198,7 @@ class Ui_LogIn(object):
         self.BtExit.clicked.connect(self.exit)
         self.BtSignIn.clicked.connect(self.signin)
         self.BtSignUp.clicked.connect(self.signup)
-    
+    ##Button function
     def signin(self): 
         print("Signing in...")
         if self.Username.text() == "" or self.Password.text() == "":
