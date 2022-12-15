@@ -18,7 +18,7 @@ HEADER_LENGTH = 10
     
 class Peer(QtWidgets.QMainWindow):
     startListen = Signal(bool)
-    def __init__(self, id, username, serverIP):
+    def __init__(self, id, username, serverIP)
         super().__init__()
         self.id = id
         self.user = username
