@@ -106,6 +106,7 @@ border-bottom-right-radius: 100px;
     </property>
     <property name="font">
      <font>
+      <family>Palatino Linotype</family>
       <pointsize>32</pointsize>
       <weight>75</weight>
       <bold>true</bold>
@@ -130,6 +131,7 @@ color: rgba(0,0,0,200);</string>
     </property>
     <property name="font">
      <font>
+      <family>Microsoft Sans Serif</family>
       <pointsize>16</pointsize>
       <weight>50</weight>
       <bold>false</bold>
@@ -162,6 +164,7 @@ padding-bottom: 7px;
     </property>
     <property name="font">
      <font>
+      <family>Microsoft Sans Serif</family>
       <pointsize>16</pointsize>
       <weight>50</weight>
       <bold>false</bold>
@@ -197,6 +200,7 @@ padding-bottom: 7px;
     </property>
     <property name="font">
      <font>
+      <family>Segoe UI Black</family>
       <pointsize>16</pointsize>
       <weight>75</weight>
       <bold>true</bold>
@@ -217,10 +221,11 @@ padding-bottom: 7px;
     </property>
     <property name="font">
      <font>
+      <family>Segoe UI Black</family>
       <pointsize>12</pointsize>
-      <weight>50</weight>
+      <weight>75</weight>
       <italic>false</italic>
-      <bold>false</bold>
+      <bold>true</bold>
       <underline>false</underline>
      </font>
     </property>
@@ -228,7 +233,7 @@ padding-bottom: 7px;
      <string notr="true">border: none;</string>
     </property>
     <property name="text">
-     <string>Forgot your Usename or Password?</string>
+     <string>Forgot your Username or Password?</string>
     </property>
    </widget>
    <widget class="QPushButton" name="BtSignUp">
@@ -242,10 +247,11 @@ padding-bottom: 7px;
     </property>
     <property name="font">
      <font>
+      <family>Cambria</family>
       <pointsize>12</pointsize>
-      <weight>50</weight>
+      <weight>75</weight>
       <italic>false</italic>
-      <bold>false</bold>
+      <bold>true</bold>
       <underline>true</underline>
      </font>
     </property>
@@ -276,14 +282,15 @@ padding-bottom: 7px;
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>130</y>
+      <y>120</y>
       <width>341</width>
       <height>61</height>
      </rect>
     </property>
     <property name="font">
      <font>
-      <pointsize>24</pointsize>
+      <family>Verdana</family>
+      <pointsize>20</pointsize>
       <weight>75</weight>
       <bold>true</bold>
      </font>
@@ -292,7 +299,13 @@ padding-bottom: 7px;
      <string notr="true">color: rgba(255,255,255,210);</string>
     </property>
     <property name="text">
-     <string>CHATVUIVE</string>
+     <string>CHAT WITH CHAD</string>
+    </property>
+    <property name="textFormat">
+     <enum>Qt::AutoText</enum>
+    </property>
+    <property name="wordWrap">
+     <bool>false</bool>
     </property>
    </widget>
    <widget class="QLabel" name="Txthello1">
@@ -306,6 +319,7 @@ padding-bottom: 7px;
     </property>
     <property name="font">
      <font>
+      <family>Segoe UI</family>
       <pointsize>12</pointsize>
      </font>
     </property>
