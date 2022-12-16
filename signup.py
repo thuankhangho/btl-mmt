@@ -143,8 +143,8 @@ class SignUp(object):
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
-    SignUp = QtWidgets.QDialog()
+    Signup = QtWidgets.QDialog()
     ui = SignUp()
-    ui.setupUi(SignUp)
-    SignUp.show()
+    ui.setupUi(Signup)
+    Signup.show()
     sys.exit(app.exec_())
