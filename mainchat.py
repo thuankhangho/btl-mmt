@@ -136,7 +136,7 @@ class Peer(QtWidgets.QMainWindow):
             sentence = connectionSocket.recv(1024).decode()
             if (sentence == "#CHAT#"):
                 #tạo connection
-                conn = Connection(res[0], connectionSocket, 0)
+                conn = Connection(res[0], connectionSocket)
                 conn.rmvConn.connect(self.removeConnection)
                 conn.render()
                 self.connection[addr[0]] = conn

@@ -15,10 +15,9 @@ class Connection(QtWidgets.QMainWindow):
     startCatching = Signal(bool)
     rmvConn = Signal(str)
 
-    def __init__(self, arr, conn, client):
+    def __init__(self, arr, conn):
         super().__init__()
         self.sendingData = False
-        self.client = client
         self.cilentSocket = conn
         self.arr = arr
 
@@ -48,8 +47,6 @@ class Connection(QtWidgets.QMainWindow):
     def render(self):
         self.setupUi(self.arr)
         self.show()
-        if (self.client == 1):
-            self.cilentSocket.send("#CHAT#".encode())
     def setupUi(self, arr):
         self.chat=[]
         self.setObjectName("MainChat")
