@@ -16,7 +16,7 @@ from UI_listfriend import *
 
 HEADER_LENGTH = 10
     
-class Peer(QtWidgets.QMainWindow): 
+class Client(QtWidgets.QMainWindow): 
     startListen = Signal(bool)
     def __init__(self, id, username, serverIP):
         super().__init__()
@@ -691,7 +691,7 @@ class Peer(QtWidgets.QMainWindow):
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
     print(sys.argv)
-    peer = Peer(int (sys.argv[1]), sys.argv[2], sys.argv[3])
+    peer = Client(int (sys.argv[1]), sys.argv[2], sys.argv[3])
 
     timer = QTimer()
 

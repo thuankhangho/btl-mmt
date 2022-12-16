@@ -23,7 +23,7 @@ class Listener(QObject):
         #hóng tạo connection
         #vì service và listen đều có emit, tín hiệu luôn loop về chờ peer khác connect
         #clarify: this aint connect mà chỉ chờ connect
-        connectionSocket, addr = self.connection.accept() #ngưng đến khi có tín hiệu connect, trả về tuple chứa #CHAT#かな
+        connectionSocket, addr = self.connection.accept() #ngưng đến khi có tín hiệu connect
         #addr trả về (địa chỉ IP client, port peer)
         endConn = False
         if (addr[0] == socket.gethostbyname(socket.gethostname())):

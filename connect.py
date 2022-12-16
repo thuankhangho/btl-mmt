@@ -194,7 +194,7 @@ class Connection(QtWidgets.QMainWindow):
         self.startCatching.emit(True)
 
     def completeData(self):
-        self.sendingData=False
+        self.sendingData = False
         self.pushButton.setEnabled(True)
         self.File_Send.setEnabled(True)
 
@@ -237,7 +237,7 @@ class Connection(QtWidgets.QMainWindow):
     def signalRmvConn(self):
         self.rmvConn.emit(self.arr[2])
 
-    def closeEvent(self,event):
+    def closeEvent(self, event):
         try:
             self.cilentSocket.send("#QUIT#".encode())
         except:
