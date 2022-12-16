@@ -70,7 +70,7 @@ def server_logout(mess):
     cur.execute("UPDATE user SET IP = %s WHERE id = %s", ("0.0.0.0", int(mess["id"])))
     con.commit()
 
-def server_showall(mess):
+def server_showall(mess): #hiển thị danh sách ngoài danh sách bạn
     cur.execute("SELECT id, name, IP, image FROM user WHERE id != %s AND id NOT IN (select friend_user_id from friend where user_id=%s)", (mess["id"],mess["id"]))
     rows = cur.fetchall()
     lists = [list(x) for x in rows]

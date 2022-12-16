@@ -515,7 +515,7 @@ class Client(QtWidgets.QMainWindow):
 
     def display(self):
         for arr in (self.friends):
-            if(arr[0]==0): continue
+            if (arr[0] == 0): continue
             #Setting up the frame
             outerFrame=QtWidgets.QFrame(self.scrollAreaWidgetContents_2)
             sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Fixed)
@@ -662,31 +662,15 @@ class Client(QtWidgets.QMainWindow):
 
             self.verticalLayout_2.addWidget(outerFrame)
 
-            ##This is for the appending to retrieve later
             self.outerFrameList.append(outerFrame)
-            #self.layerList.append(layer)
-            #self.buttonFrameList.append(button_frame)
-            #self.hLayout28List.append(horizontalLayout28)
             self.removeList.append(Remove_8)
             self.chatList.append(Chat_8)
-            #self.InfoFrame.append(Info_8)
-            #self.hLayout29List.append(horizontalLayout29)
-            #self.ImageReal.append(ImageReal_8)
-            #self.InfoBoxList.append(InfoBox_8)
-            #self.vLayout.append(verticalLayout_11)
             self.name.append(Name_8)
-            #self.status.append(Status_9)
-            #self.hLayout30List.append(horizontalLayout_30)
-            #self.IMG_8List.append(IMG_8)
             self.OnOffList.append(OnOff_8)
 
             ##Updating the Friend List with information
             self.retranslateBt(arr)
     
-    def returnapp(self):
-        self.close()
-        call(["python", "app.py"])
-
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)

@@ -4,11 +4,11 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QMessageBox
 import socket, pickle
 from subprocess import call
-from app import serverIP
+from login import serverIP
 
 HEADER_LENGTH = 10
 
-class Ui_SignUp(object):
+class SignUp(object):
     #UI 'til line 100
     def setupUi(self, SignUp):
         SignUp.setObjectName("SignUp")
@@ -134,7 +134,7 @@ class Ui_SignUp(object):
                 mess.exec_()
             else:
                 self.SignUp.close()
-                call(["python", "app.py"])
+                call(["python", "login.py"])
 
             client_socket.close()
 
@@ -144,7 +144,7 @@ class Ui_SignUp(object):
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
     SignUp = QtWidgets.QDialog()
-    ui = Ui_SignUp()
+    ui = SignUp()
     ui.setupUi(SignUp)
     SignUp.show()
     sys.exit(app.exec_())

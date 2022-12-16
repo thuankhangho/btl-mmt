@@ -11,7 +11,7 @@ HEADER_LENGTH = 10
 
 serverIP = "192.168.1.14"
 
-class Ui_LogIn(object):
+class LogIn(object):
     #UI 'til line 202
     def setupUi(self, LogIn):
         LogIn.setObjectName("LogIn")
@@ -255,7 +255,7 @@ class Ui_LogIn(object):
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
     LogIn = QtWidgets.QWidget()
-    ui = Ui_LogIn()
+    ui = LogIn()
     ui.setupUi(LogIn)
     LogIn.show()
     sys.exit(app.exec_())
