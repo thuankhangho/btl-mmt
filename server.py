@@ -42,9 +42,7 @@ def server_login(message): #đăng nhập vào server
         connection_socket.send(text.encode())
 
 def server_show(message): #hiển thị danh sách bạn
-    # cur.execute("select id, name, IP, image from user")
-    cur.execute("SELECT id, name, IP, image FROM user WHERE id IN (SELECT friend_user_id FROM friend WHERE user_id = %s) AND IP != '0.0.0.0'",
-                (message["id"]))
+    cur.execute("SELECT id, name, IP, image FROM user WHERE id IN (SELECT friend_user_id FROM friend WHERE user_id = %s) AND IP != '0.0.0.0'", (message["id"]))
     rows = cur.fetchall()
     lists = [list(x) for x in rows]
     jsonStr = json.dumps(lists)
@@ -110,23 +108,23 @@ while 1:
     print(message["method"])
 
     if message["method"] == "login":
-        loginThread = threading.Thread(target=server_login, args=(message,))
+        loginThread = threading.Thread(target = server_login, args = (message,))
         loginThread.start()
     elif message["method"] == "show":
         print(message)
-        showThread = threading.Thread(target=server_show, args=(message,))
+        showThread = threading.Thread(target = server_show, args = (message,))
         showThread.start()
     elif message["method"] == "signup":
-        signupThread = threading.Thread(target=server_signup, args=(message,))
+        signupThread = threading.Thread(target = server_signup, arg = (message,))
         signupThread.start()
     elif message["method"] == "logout":
-        logoutThread = threading.Thread(target=server_logout, args=(message,))
+        logoutThread = threading.Thread(target = server_logout, args = (message,))
         logoutThread.start()
     elif message["method"] == "showall":
-        showAllThread = threading.Thread(target=server_showall,args=(message,))
+        showAllThread = threading.Thread(target = server_showall, args = (message,))
         showAllThread.start()
     elif message["method"] == "addfriend":
-        addFriendThread = threading.Thread(target=server_addfriend,args=(message,connection_socket,))
+        addFriendThread = threading.Thread(target = server_addfriend, args = (message,connection_socket,))
         addFriendThread.start()
 
 connection_socket.close()

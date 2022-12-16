@@ -28,6 +28,7 @@ class Peer(QtWidgets.QMainWindow):
         #self.timer.start(10000)
 
         print("Starting Client....")
+        #nối với server
         client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         client_socket.connect((self.serverIP, 8082))
         
@@ -47,7 +48,7 @@ class Peer(QtWidgets.QMainWindow):
         print(mes)
         print(type(mes))
         
-        #s
+        #cập nhật list friend
         self.friends = [[0, 'Server', self.serverIP, ""]]
         if (mes != "[]"):
             arr = mes.split("], [")
@@ -68,18 +69,17 @@ class Peer(QtWidgets.QMainWindow):
         ####Init Listener####
         
         #yes this is port p2p
-        self.serverPort = 12000 
+        self.serverPort = 12000
         self.serverSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
         self.serverSocket.bind(('', self.serverPort))
         self.serverSocket.listen(5)
 
-        #tạo thread ms
+        #tạo thread ms để hóng connection
         self.listener = Listener(self.serverSocket)
         self.listenThread = QThread()
         self.listener.moveToThread(self.listenThread)
 
-        #kết nối signal với hàm của 2 class Peer và Listener
         #signal catchConnection của listener khi có tín hiệu emit sẽ chạy hàm service và tương tự
         self.listener.catchConnection.connect(self.service)
         self.startListen.connect(self.listener.listenWrapper)
@@ -123,18 +123,19 @@ class Peer(QtWidgets.QMainWindow):
     ###############################   Listener   ################################
     #############################################################################
     def service(self, tuple):
-        #nhận emit từ listener để chạy, nhiệm vụ tạo connect
+        #nhận emit từ listener để chạy, nhiệm vụ tạo connection
         print("Loading...")
         connectionSocket = tuple[0]
         addr = tuple[1]
         endCond = tuple[2]
         if endCond: return
 
-        #tìm bạn để connect
+        #connect qua addr (x[0]) và connectionSocket, bằng k sẽ đóng socket
         res = [x for x in self.friends if x[2] == addr[0]]
         if (res != []):
             sentence = connectionSocket.recv(1024).decode()
             if (sentence == "#CHAT#"):
+                #tạo connection
                 conn = Connection(res[0], connectionSocket, 0)
                 conn.rmvConn.connect(self.removeConnection)
                 conn.render()
@@ -438,7 +439,7 @@ class Peer(QtWidgets.QMainWindow):
         serverPort = 12000 #p2p port
         cilentSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         try:
-            cilentSocket.connect((serverIP,serverPort))
+            cilentSocket.connect((serverIP, serverPort))
         except:
             msg = QMessageBox()
             msg.setWindowTitle("Can't connect to this User!")

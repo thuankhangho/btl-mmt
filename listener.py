@@ -22,14 +22,17 @@ class Listener(QObject):
         print("Listening...")
         #hóng tạo connection
         #vì service và listen đều có emit, tín hiệu luôn loop về chờ peer khác connect
-        connectionSocket, addr = self.connection.accept() 
-        #ngưng đến khi có tín hiệu connect, trả về tuple chứa #CHAT#かな
+        #clarify: this aint connect mà chỉ chờ connect
+        connectionSocket, addr = self.connection.accept() #ngưng đến khi có tín hiệu connect, trả về tuple chứa #CHAT#かな
+        #addr trả về (địa chỉ IP client, port peer)
         endConn = False
         if (addr[0] == socket.gethostbyname(socket.gethostname())):
             endConn = True
         self.catchConnection.emit((connectionSocket, addr, endConn))
 
 class Catcher(QObject):
+    #tạo ra từ tín hiệu ở Listener, dùng để giữ connection p2p
+    #for both tin nhắn and file
     shutdown = Signal(bool)
     catchMessage = Signal(object)
     
@@ -44,6 +47,7 @@ class Catcher(QObject):
     dataDone = Signal(bool)
     
     def catchMsg(self):
+        #đọc tín hiệu từ trong socket
         sentence = self.connection.recv(1024).decode()
         print(f"From catchMsg: {sentence}")
         #time.sleep(12000)
@@ -53,7 +57,7 @@ class Catcher(QObject):
             self.connection.close()
             self.shutdown.emit(True)
         elif (sentence[:9] == "#CONTENT#"): 
-            self.catchMessage.emit((sentence[9:], 0)) #gửi tin nhắn
+            self.catchMessage.emit((sentence[9:], 0))
         elif (sentence[:6] == "#FILE#"):
             info = sentence[6:].split("#")
             name = info[0]

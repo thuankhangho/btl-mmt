@@ -9,7 +9,7 @@ import pickle
 
 HEADER_LENGTH = 10
 
-serverIP = "192.168.1.121"
+serverIP = "192.168.1.14"
 
 class Ui_LogIn(object):
     #UI 'til line 202
@@ -215,6 +215,7 @@ class Ui_LogIn(object):
             ip_address = socket.gethostbyname(hostname)
             
             print("Sending from " + hostname + " with IP address " + ip_address)
+            
             #cả đoạn code này sẽ lặp lại khắp bài mỗi khi kết nối server
             message = {}
             message["method"] = "login" #check Username vs Password

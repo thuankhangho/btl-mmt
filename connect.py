@@ -15,16 +15,14 @@ class Connection(QtWidgets.QMainWindow):
     startCatching = Signal(bool)
     rmvConn = Signal(str)
 
-    def __init__(self,arr,conn,client):
+    def __init__(self, arr, conn, client):
         super().__init__()
         self.sendingData = False
         self.client = client
         self.cilentSocket = conn
         self.arr = arr
 
-        ###############
-        #Setup Listener for friend
-        ###############
+        #tạo thread p2p cho tin nhắn
         self.catcher = Catcher(self.cilentSocket)
         self.catchThread = QThread()
         self.catcher.moveToThread(self.catchThread)
@@ -36,9 +34,9 @@ class Connection(QtWidgets.QMainWindow):
         self.catcher.dataReceived.connect(self.dataRes)
 
         self.catchThread.start()
-        self.startCatching.emit(True)
+        self.startCatching.emit(True) #luôn mở lại catchMsg sau mỗi lệnh
 
-    def dataRes(self,name):
+    def dataRes(self, name):
         print("Relistening...")
         self.displayMsg((f"Received file {name}", 2))
         self.startCatching.emit(True)    
@@ -163,7 +161,7 @@ class Connection(QtWidgets.QMainWindow):
     def sendLine(self):
         if (self.lineEdit.text() != ""):
             sentence = "#CONTENT#" + self.lineEdit.text().strip()
-            self.cilentSocket.send(sentence.encode())
+            self.cilentSocket.send(sentence.encode()) #bắn qua bên kia qua socket
             self.displayMsg((self.lineEdit.text(), 1))
             self.lineEdit.setText("")
 
@@ -174,10 +172,11 @@ class Connection(QtWidgets.QMainWindow):
     startDataSending = Signal(bool)
     startSendingDataBody = Signal(bool)
     def sendFile(self):
-        self.sendingData=True
+        self.sendingData = True
         self.pushButton.setEnabled(False)
         self.File_Send.setEnabled(False)
 
+        #tạo thread cho file
         self.dataLink = DataLink(self.cilentSocket,self.Path.text())
         self.dataThread = QThread()
         self.dataLink.moveToThread(self.dataThread)
