@@ -5,7 +5,7 @@ from PyQt5.QtCore import QThread, QObject, pyqtSignal as Signal, pyqtSlot as Slo
 import os
 from connect import *
 
-
+#k có UI, k phụ trách giao diện
 class Listener(QObject):
     #listener = đứng hóng = thread
     catchConnection = Signal(object)
@@ -20,8 +20,10 @@ class Listener(QObject):
     @Slot(object)
     def listen(self):
         print("Listening...")
-        #đợi peer khác connect với nó, luôn loop về chờ
+        #hóng tạo connection
+        #vì service và listen đều có emit, tín hiệu luôn loop về chờ peer khác connect
         connectionSocket, addr = self.connection.accept() 
+        #ngưng đến khi có tín hiệu connect, trả về tuple chứa #CHAT#かな
         endConn = False
         if (addr[0] == socket.gethostbyname(socket.gethostname())):
             endConn = True
@@ -45,23 +47,24 @@ class Catcher(QObject):
         sentence = self.connection.recv(1024).decode()
         print(f"From catchMsg: {sentence}")
         #time.sleep(12000)
-        if(sentence == "#QUIT#"): 
+        if (sentence == "#QUIT#"): 
             self.connection.send("#QUIT#".encode())
             time.sleep(1)
             self.connection.close()
             self.shutdown.emit(True)
-        elif(sentence[:9] == "#CONTENT#"): self.catchMessage.emit((sentence[9:], 0))
-        elif(sentence[:6] == "#FILE#"):
+        elif (sentence[:9] == "#CONTENT#"): 
+            self.catchMessage.emit((sentence[9:], 0)) #gửi tin nhắn
+        elif (sentence[:6] == "#FILE#"):
             info = sentence[6:].split("#")
             name = info[0]
             size = info[1]
             print(f"Name: {name}, size:{size}")
             self.connection.send("#FILEOK#".encode())
-            self.writeFile(name,size)
-        elif(sentence == "#FILEOK#"):
+            self.writeFile(name, size)
+        elif (sentence == "#FILEOK#"):
             print("File OK")
             self.fileOK.emit(True)
-        elif(sentence == "#COMPLETED#"):
+        elif (sentence == "#COMPLETED#"):
             print("File Done")
             self.dataDone.emit(True)
 
@@ -74,14 +77,13 @@ class Catcher(QObject):
         done = False
         while not done:
             data = self.connection.recv(buffersize)
-            #print(f"From writeFile:{data.decode()}")
             file_bytes += data
             if file_bytes[-5:] == b"#END#":
                 done = True
             print(len(file_bytes))
         file.write(file_bytes[:-5])
         file.close()
-        print("Out Loop")
+        print("Out of Loop")
         self.dataReceived.emit(name)
         self.connection.send("#COMPLETED#".encode())
         
@@ -89,18 +91,18 @@ class Catcher(QObject):
 class DataLink(QObject):
     def __init__(self, receiver, path):
         super().__init__()
-        self.connection=receiver
-        self.path=path
-        self.name=path.split("\\")[-1]
-        self.size=os.path.getsize(self.path)
+        self.connection = receiver
+        self.path = path
+        self.name = path.split("\\")[-1]
+        self.size = os.path.getsize(self.path)
         
     
     def send(self):
         self.connection.send(f"#FILE#{self.name}#{self.size}".encode())
 
     def sendBody(self):
-        file=open(self.path,"rb")
-        data=file.read()
+        file = open(self.path,"rb")
+        data = file.read()
         self.connection.sendall(data)
         self.connection.send(b"#END#")
         file.close()

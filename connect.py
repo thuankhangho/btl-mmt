@@ -39,23 +39,20 @@ class Connection(QtWidgets.QMainWindow):
         self.startCatching.emit(True)
 
     def dataRes(self,name):
-        print("Relistenning")
+        print("Relistening...")
         self.displayMsg((f"Received file {name}", 2))
         self.startCatching.emit(True)    
-
-
-    
-        
 
     #############################################################################
     ##################################   UI   ###################################
     #############################################################################
+    
     def render(self):
         self.setupUi(self.arr)
         self.show()
-        if(self.client == 1):
+        if (self.client == 1):
             self.cilentSocket.send("#CHAT#".encode())
-    def setupUi(self,arr):
+    def setupUi(self, arr):
         self.chat=[]
         self.setObjectName("MainChat")
         self.resize(730, 700)
@@ -64,7 +61,7 @@ class Connection(QtWidgets.QMainWindow):
         self.centralwidget.setObjectName("centralwidget")
         self.avatar = QtWidgets.QLabel(self.centralwidget)
         self.avatar.setGeometry(QtCore.QRect(570, 30, 150, 150))
-        image=QImage()
+        image = QImage()
         image.loadFromData(requests.get(arr[3]).content)
         self.avatar.setPixmap(QPixmap(image))
         self.avatar.setScaledContents(True)
@@ -106,8 +103,8 @@ class Connection(QtWidgets.QMainWindow):
         sizePolicy.setHeightForWidth(self.scrollArea.sizePolicy().hasHeightForWidth())
         self.scrollArea.setSizePolicy(sizePolicy)
         self.scrollArea.setStyleSheet("#scrollArea{\n"
-"    background-color:rgba(0,0,0,100);\n"
-"}")
+                                      "    background-color:rgba(0,0,0,100);\n"
+                                      "}")
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName("scrollArea")
         self.scrollAreaWidgetContents = QtWidgets.QWidget()
@@ -125,7 +122,7 @@ class Connection(QtWidgets.QMainWindow):
         font.setWeight(75)
         self.File_Send.setFont(font)
         self.File_Send.setStyleSheet("background-color: blue;\n"
-"color: white;")
+                                     "color: white;")
         self.File_Send.setObjectName("File_Send")
         self.File_Send.clicked.connect(self.sendFile)
         self.Path = QtWidgets.QLineEdit(self.centralwidget)
@@ -146,8 +143,7 @@ class Connection(QtWidgets.QMainWindow):
         #Setup send button
         #############
         self.pushButton.clicked.connect(self.sendLine)
-
-    def retranslateUi(self,arr):
+    def retranslateUi(self, arr):
         _translate = QtCore.QCoreApplication.translate
         self.setWindowTitle(_translate("MainChat", "MainWindow"))
         self.textBrowser.setHtml(_translate("MainChat", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
@@ -160,45 +156,44 @@ class Connection(QtWidgets.QMainWindow):
         self.IP_2.setText(_translate("MainChat", arr[1]))
         self.File_Send.setText("File")
 
-
-
     ##########################################
     #############  Sending Text   ############
     ##########################################
+    
     def sendLine(self):
-        if(self.lineEdit.text()!=""):
-            sentence="#CONTENT#"+self.lineEdit.text().strip()
+        if (self.lineEdit.text() != ""):
+            sentence = "#CONTENT#" + self.lineEdit.text().strip()
             self.cilentSocket.send(sentence.encode())
-            self.displayMsg((self.lineEdit.text(),1))
+            self.displayMsg((self.lineEdit.text(), 1))
             self.lineEdit.setText("")
 
 
     ##########################################
     #############  Sending Data   ############
     ##########################################
-    startDataSending=Signal(bool)
-    startSendingDataBody=Signal(bool)
+    startDataSending = Signal(bool)
+    startSendingDataBody = Signal(bool)
     def sendFile(self):
         self.sendingData=True
         self.pushButton.setEnabled(False)
         self.File_Send.setEnabled(False)
 
-        self.dataLink=DataLink(self.cilentSocket,self.Path.text())
-        self.dataThread=QThread()
+        self.dataLink = DataLink(self.cilentSocket,self.Path.text())
+        self.dataThread = QThread()
         self.dataLink.moveToThread(self.dataThread)
 
         self.startDataSending.connect(self.dataLink.send)
         self.startSendingDataBody.connect(self.dataLink.sendBody)
         self.catcher.fileOK.connect(self.sendContentFile)
         
-        self.displayMsg(("Sending file from "+self.Path.text(),2))
+        self.displayMsg(("Sending file from " + self.Path.text(), 2))
         self.dataThread.start()
-        print("Start Sending")
+        print("Sending...")
         self.startDataSending.emit(True)
         
 
     def sendContentFile(self):
-        print("File Body")
+        print("Commence file transfering...")
         self.startSendingDataBody.emit(True)
         self.startCatching.emit(True)
 
@@ -211,11 +206,11 @@ class Connection(QtWidgets.QMainWindow):
 
         self.Path.setText("")
         self.startCatching.emit(True)
-        print("Complete File Transfer")
+        print("File transfering Completed!")
 
-    def displayMsg(self,group):
-        sentence=group[0]
-        user=group[1]
+    def displayMsg(self, group):
+        sentence = group[0]
+        user = group[1]
         newLabel = QtWidgets.QLabel(self.scrollAreaWidgetContents)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -223,11 +218,11 @@ class Connection(QtWidgets.QMainWindow):
         sizePolicy.setHeightForWidth(newLabel.sizePolicy().hasHeightForWidth())
         newLabel.setSizePolicy(sizePolicy)
         newLabel.setMinimumSize(QtCore.QSize(0, 25))
-        if(user==1):
+        if(user == 1):
             newLabel.setStyleSheet("background-color: turquoise")
-        elif (user==0):
+        elif (user == 0):
             newLabel.setStyleSheet("background-color: pink")
-        elif (user==2):
+        elif (user == 2):
             newLabel.setStyleSheet("background-color: gray")
         newLabel.setObjectName("label")
         self.verticalLayout.addWidget(newLabel)
@@ -235,7 +230,7 @@ class Connection(QtWidgets.QMainWindow):
         newLabel.setText(_translate("MainChat", sentence))
         self.chat.append(newLabel)
 
-        if(user==0):
+        if(user == 0):
             self.startCatching.emit(True)
 
 

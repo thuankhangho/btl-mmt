@@ -207,7 +207,6 @@ class Ui_LogIn(object):
             mess.setText("Please make sure to fill in both your Username and Password correctly!")
             mess.exec_()
         else:
-            #kết nối với server check username vs password
             print("Starting Client...")
             client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             client_socket.connect((serverIP, 8082))
@@ -216,19 +215,19 @@ class Ui_LogIn(object):
             ip_address = socket.gethostbyname(hostname)
             
             print("Sending from " + hostname + " with IP address " + ip_address)
-
+            #cả đoạn code này sẽ lặp lại khắp bài mỗi khi kết nối server
             message = {}
-            message["method"] = "login"
+            message["method"] = "login" #check Username vs Password
             message["user_name"] = self.Username.text()
             message["password"] = self.Password.text()
             message["ip"] = ip_address
 
             msg = pickle.dumps(message)
-            msg = bytes(f"{len(msg):<{HEADER_LENGTH}}", "utf-8") + msg
+            msg = bytes(f"{len(msg):<{HEADER_LENGTH}}", "utf-8") + msg #tạo msg gửi server
             
             client_socket.send(msg)
 
-            text = client_socket.recv(1024) #1MB làm buffer cho msg
+            text = client_socket.recv(1024) #buffer 1MB nhận tin nhắn
             response = text.decode()
 
             if (response == "Not"):
@@ -240,7 +239,7 @@ class Ui_LogIn(object):
                 self.LogIn.close()
                 call(["python", "mainchat.py", response, self.Username.text(), serverIP])
 
-            client_socket.close()
+            client_socket.close() #đóng socket
 
             print("Ending Client....")
 

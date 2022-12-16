@@ -15,14 +15,14 @@ def get_client_data(server):
 def send_text(sending_socket, text):
     # data = text.encode()
     # sending_socket.send(data)
-    sending_socket.sendall(bytes(text,encoding="utf-8"))
+    sending_socket.sendall(bytes(text, encoding = "utf-8"))
 
 HOST = ''
 PORT = 8082
 server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 server_socket.bind((HOST, PORT))
 server_socket.listen(5)
-print('Start Server...')
+print('Starting Server...')
 
 def server_login(message): #đăng nhập vào server
     cur.execute("SELECT * FROM user WHERE username = %s AND password = %s", #xóa status bởi vì không ai quan tâm
@@ -60,7 +60,7 @@ def server_signup(message):
         cur.execute("INSERT INTO user (name, username, password, IP, status, image) values (%s, %s, %s, %s, 1, 'https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/i/4236d1d9-6a66-4488-ab28-bf744b693173/ddn54uv-2d9156a6-6e13-45f4-a2f5-e0c8fb637418.jpg/v1/fill/w_894,h_894,q_70,strp/free_padoru_base__psd__open_by_turnip007_ddn54uv-pre.jpg')", (message["name"], message["user_name"], message["password"], message["ip"]))
         con.commit()
         text = "Ok"
-        print("Sign up successfully!!")
+        print("Signing up successfully!")
         connection_socket.send(text.encode())
     else:
         text = "Not"
@@ -69,7 +69,6 @@ def server_signup(message):
 
 def server_logout(mess):
 
-    # print("UPDATE user SET IP = %s WHERE id = %i", ("0.0.0.0", int(mess["id"])))
     cur.execute("UPDATE user SET IP = %s WHERE id = %s", ("0.0.0.0", int(mess["id"])))
     con.commit()
 
@@ -106,30 +105,30 @@ while 1:
     print(message)
 
     con = pymysql.connect(
-        host="localhost", user="root", password="", database="mmt")
+        host = "localhost", user="root", password="", database = "mmt")
     cur = con.cursor()
     print(message["method"])
 
     if message["method"] == "login":
-        loginThread=threading.Thread(target=server_login, args=(message,))
+        loginThread = threading.Thread(target=server_login, args=(message,))
         loginThread.start()
     elif message["method"] == "show":
         print(message)
-        showThread=threading.Thread(target=server_show, args=(message,))
+        showThread = threading.Thread(target=server_show, args=(message,))
         showThread.start()
     elif message["method"] == "signup":
-        signupThread=threading.Thread(target=server_signup, args=(message,))
+        signupThread = threading.Thread(target=server_signup, args=(message,))
         signupThread.start()
     elif message["method"] == "logout":
-        logoutThread=threading.Thread(target=server_logout, args=(message,))
+        logoutThread = threading.Thread(target=server_logout, args=(message,))
         logoutThread.start()
-    elif message["method"]=="showall":
-        showAllThread=threading.Thread(target=server_showall,args=(message,))
+    elif message["method"] == "showall":
+        showAllThread = threading.Thread(target=server_showall,args=(message,))
         showAllThread.start()
-    elif message["method"]=="addfriend":
-        addFriendThread=threading.Thread(target=server_addfriend,args=(message,connection_socket,))
+    elif message["method"] == "addfriend":
+        addFriendThread = threading.Thread(target=server_addfriend,args=(message,connection_socket,))
         addFriendThread.start()
 
 connection_socket.close()
 server_socket.close()
-print("End Server...")
+print("Ending Server...")
