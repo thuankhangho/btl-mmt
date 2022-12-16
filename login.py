@@ -254,8 +254,8 @@ class LogIn(object):
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
-    LogIn = QtWidgets.QWidget()
+    login = QtWidgets.QWidget()
     ui = LogIn()
-    ui.setupUi(LogIn)
-    LogIn.show()
+    ui.setupUi(login)
+    login.show()
     sys.exit(app.exec_())
