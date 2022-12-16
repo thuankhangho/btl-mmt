@@ -246,10 +246,14 @@
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
                 <mxCell id="304" value="Người dùng nhập &lt;br&gt;vào đường dẫn file" style="whiteSpace=wrap;html=1;rounded=1;arcSize=22;" parent="1" vertex="1">
-                    <mxGeometry x="1140" y="-50" width="120" height="60" as="geometry"/>
+                    <mxGeometry x="922.55" y="-30" width="120" height="60" as="geometry"/>
                 </mxCell>
                 <mxCell id="305" style="edgeStyle=none;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="299" target="304" edge="1">
-                    <mxGeometry relative="1" as="geometry"/>
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="983" y="-150"/>
+                        </Array>
+                    </mxGeometry>
                 </mxCell>
                 <mxCell id="317" value="Tạo thread Catcher nhận tương tác" style="whiteSpace=wrap;html=1;rounded=1;arcSize=22;" parent="1" vertex="1">
                     <mxGeometry x="1347.75" y="-310" width="120" height="60" as="geometry"/>
@@ -257,8 +261,11 @@
                 <mxCell id="318" style="edgeStyle=none;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="295" target="317" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="331" value="Tạo thread DataLink&lt;br&gt;để tương tác với file" style="whiteSpace=wrap;html=1;rounded=1;arcSize=22;" parent="1" vertex="1">
-                    <mxGeometry x="1347.75" y="-50" width="120" height="60" as="geometry"/>
+                <mxCell id="400" style="edgeStyle=none;html=1;" edge="1" parent="1" source="331" target="399">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="331" value="Vô hiệu hóa tạm thời các chức năng khác" style="whiteSpace=wrap;html=1;rounded=1;arcSize=22;" parent="1" vertex="1">
+                    <mxGeometry x="1140" y="-30" width="120" height="60" as="geometry"/>
                 </mxCell>
                 <mxCell id="332" style="edgeStyle=none;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="304" target="331" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
@@ -277,7 +284,7 @@
                 <mxCell id="335" value="" style="rhombus;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="1375.8200000000002" y="80" width="63.85" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="336" style="edgeStyle=none;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="331" target="335" edge="1">
+                <mxCell id="336" style="edgeStyle=none;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" parent="1" source="399" target="335" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
                 <mxCell id="227" value="" style="ellipse;html=1;shape=endState;fillColor=#000000;strokeColor=#ff0000;" parent="1" vertex="1">
@@ -381,19 +388,28 @@
                     <mxGeometry x="1140" y="470" width="120" height="60" as="geometry"/>
                 </mxCell>
                 <mxCell id="393" value="Khởi động lại &lt;br&gt;chờ kết nối ở thread" style="whiteSpace=wrap;html=1;rounded=1;arcSize=22;" vertex="1" parent="1">
-                    <mxGeometry x="1140" y="730" width="120" height="60" as="geometry"/>
+                    <mxGeometry x="922.54" y="850" width="120" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="397" style="edgeStyle=none;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="394" target="393">
+                <mxCell id="397" style="edgeStyle=none;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="394" target="401">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
                 <mxCell id="394" value="Nhận được tin &quot;#COMPLETED#&quot;" style="whiteSpace=wrap;html=1;rounded=1;arcSize=22;" vertex="1" parent="1">
                     <mxGeometry x="1347.75" y="730" width="120" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="398" style="edgeStyle=none;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="393" target="396">
+                <mxCell id="398" style="edgeStyle=none;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="396" target="393">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
                 <mxCell id="396" value="Đóng và thoát khỏi thread Datalink" style="whiteSpace=wrap;html=1;rounded=1;arcSize=22;" vertex="1" parent="1">
-                    <mxGeometry x="922.55" y="730" width="120" height="60" as="geometry"/>
+                    <mxGeometry x="922.54" y="730" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="399" value="Tạo thread DataLink&lt;br&gt;để tương tác với file" style="whiteSpace=wrap;html=1;rounded=1;arcSize=22;" vertex="1" parent="1">
+                    <mxGeometry x="1347.75" y="-30" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="402" style="edgeStyle=none;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="401" target="396">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="401" value="Khởi động lại &lt;br&gt;các chức năng khác" style="whiteSpace=wrap;html=1;rounded=1;arcSize=22;" vertex="1" parent="1">
+                    <mxGeometry x="1140" y="730" width="120" height="60" as="geometry"/>
                 </mxCell>
             </root>
         </mxGraphModel>
