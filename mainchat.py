@@ -338,20 +338,9 @@ class Client(QtWidgets.QMainWindow):
         ################################################################################################
         #Adding Friend
         self.outerFrameList=[]
-        #self.layerList=[]
-        #self.buttonFrameList=[]
-        #self.hLayout28List=[]
         self.removeList=[]
         self.chatList=[]
-        #self.InfoFrame=[]
-        #self.hLayout29List=[]
-        #self.ImageReal=[]
-        #self.InfoBoxList=[]
-        #self.vLayout=[]
         self.name=[]
-        #self.status=[]
-        #self.hLayout30List=[]
-        #self.IMG_8List=[]
         self.OnOffList=[]
         self.display()
         ##########################################################
@@ -517,7 +506,7 @@ class Client(QtWidgets.QMainWindow):
         for arr in (self.friends):
             if (arr[0] == 0): continue
             #Setting up the frame
-            outerFrame=QtWidgets.QFrame(self.scrollAreaWidgetContents_2)
+            outerFrame = QtWidgets.QFrame(self.scrollAreaWidgetContents_2)
             sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Fixed)
             sizePolicy.setHorizontalStretch(0)
             sizePolicy.setVerticalStretch(0)

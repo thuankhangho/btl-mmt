@@ -14,7 +14,7 @@ HEADER_LENGTH = 10
 
 
 class UI_AddFriend(QtWidgets.QMainWindow):
-    def __init__(self,id,serverIP):
+    def __init__(self, id, serverIP):
         #kết nối với server để gọi ds fr
         super().__init__()
         self.id = id
