@@ -239,9 +239,9 @@ padding-bottom: 7px;
    <widget class="QPushButton" name="BtSignUp">
     <property name="geometry">
      <rect>
-      <x>380</x>
+      <x>490</x>
       <y>470</y>
-      <width>361</width>
+      <width>121</width>
       <height>41</height>
      </rect>
     </property>
@@ -259,7 +259,7 @@ padding-bottom: 7px;
      <string notr="true">border: none;</string>
     </property>
     <property name="text">
-     <string>Don't have an account? Sign up here</string>
+     <string>Sign Up</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_3">
@@ -281,16 +281,16 @@ padding-bottom: 7px;
    <widget class="QLabel" name="Txtnameapp">
     <property name="geometry">
      <rect>
-      <x>0</x>
+      <x>10</x>
       <y>120</y>
-      <width>351</width>
+      <width>341</width>
       <height>61</height>
      </rect>
     </property>
     <property name="font">
      <font>
       <family>Verdana</family>
-      <pointsize>19</pointsize>
+      <pointsize>20</pointsize>
       <weight>75</weight>
       <bold>true</bold>
      </font>
@@ -299,7 +299,7 @@ padding-bottom: 7px;
      <string notr="true">color: rgba(255,255,255,210);</string>
     </property>
     <property name="text">
-     <string>CHAT WITH CHADS</string>
+     <string>CHAT WITH CHAD</string>
     </property>
     <property name="textFormat">
      <enum>Qt::AutoText</enum>
@@ -319,18 +319,15 @@ padding-bottom: 7px;
     </property>
     <property name="font">
      <font>
-      <family>Palatino Linotype</family>
+      <family>Segoe UI</family>
       <pointsize>12</pointsize>
-      <weight>75</weight>
-      <italic>true</italic>
-      <bold>true</bold>
      </font>
     </property>
     <property name="styleSheet">
      <string notr="true">color: rgba(255,255,255,170);</string>
     </property>
     <property name="text">
-     <string>We are CHAT WITH CHADS!</string>
+     <string>Hi, we are CHATVUIVE</string>
     </property>
    </widget>
    <widget class="QLabel" name="Txthello2">
@@ -344,18 +341,14 @@ padding-bottom: 7px;
     </property>
     <property name="font">
      <font>
-      <family>Palatino Linotype</family>
       <pointsize>12</pointsize>
-      <weight>75</weight>
-      <italic>true</italic>
-      <bold>true</bold>
      </font>
     </property>
     <property name="styleSheet">
      <string notr="true">color: rgba(255,255,255,170);</string>
     </property>
     <property name="text">
-     <string>Welcome to our chat app!</string>
+     <string>Welcome to our app!</string>
     </property>
    </widget>
    <widget class="QLabel" name="Txthello3">
@@ -369,18 +362,14 @@ padding-bottom: 7px;
     </property>
     <property name="font">
      <font>
-      <family>Palatino Linotype</family>
       <pointsize>12</pointsize>
-      <weight>75</weight>
-      <italic>true</italic>
-      <bold>true</bold>
      </font>
     </property>
     <property name="styleSheet">
      <string notr="true">color: rgba(255,255,255,170);</string>
     </property>
     <property name="text">
-     <string>Have a good day with your Chads!</string>
+     <string>Have a good day with your friend!</string>
     </property>
    </widget>
    <widget class="QPushButton" name="BtExit">
