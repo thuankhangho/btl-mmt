@@ -95,7 +95,7 @@ def server_addfriend(message, connect_socket2):
     # connect_socket2.send("hello".encode())
 
 
-while 1:
+while True:
     connection_socket, addr = server_socket.accept()
 
     message = get_client_data(connection_socket)
