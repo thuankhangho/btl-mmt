@@ -15,11 +15,12 @@ class Connection(QtWidgets.QMainWindow):
     startCatching = Signal(bool)
     rmvConn = Signal(str)
 
-    def __init__(self, arr, conn):
+    def __init__(self, arr, conn, client):
         super().__init__()
         self.sendingData = False
         self.cilentSocket = conn
         self.arr = arr
+        self.client = client
 
         #tạo thread p2p cho tin nhắn
         self.catcher = Catcher(self.cilentSocket)
@@ -47,6 +48,8 @@ class Connection(QtWidgets.QMainWindow):
     def render(self):
         self.setupUi(self.arr)
         self.show()
+        if (self.client == 1):
+            self.cilentSocket.send("#CHAT#".encode())
     def setupUi(self, arr):
         self.chat=[]
         self.setObjectName("MainChat")

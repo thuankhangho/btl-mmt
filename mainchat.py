@@ -136,7 +136,7 @@ class Client(QtWidgets.QMainWindow):
             sentence = connectionSocket.recv(1024).decode()
             if (sentence == "#CHAT#"):
                 #tạo connection
-                conn = Connection(res[0], connectionSocket)
+                conn = Connection(res[0], connectionSocket, 0)
                 conn.rmvConn.connect(self.removeConnection)
                 conn.render()
                 self.connection[addr[0]] = conn
@@ -665,7 +665,5 @@ if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
     print(sys.argv)
     peer = Client(int (sys.argv[1]), sys.argv[2], sys.argv[3])
-
     timer = QTimer()
-
     sys.exit(app.exec_())
