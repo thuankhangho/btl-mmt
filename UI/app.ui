@@ -327,7 +327,7 @@ padding-bottom: 7px;
      <string notr="true">color: rgba(255,255,255,170);</string>
     </property>
     <property name="text">
-     <string>Hi, we are CHATVUIVE</string>
+     <string>Welcome to Chat With Chad!</string>
     </property>
    </widget>
    <widget class="QLabel" name="Txthello2">
@@ -348,7 +348,7 @@ padding-bottom: 7px;
      <string notr="true">color: rgba(255,255,255,170);</string>
     </property>
     <property name="text">
-     <string>Welcome to our app!</string>
+     <string>A chat app for Chads!</string>
     </property>
    </widget>
    <widget class="QLabel" name="Txthello3">
@@ -369,7 +369,7 @@ padding-bottom: 7px;
      <string notr="true">color: rgba(255,255,255,170);</string>
     </property>
     <property name="text">
-     <string>Have a good day with your friend!</string>
+     <string>Have a good day with your Chads!</string>
     </property>
    </widget>
    <widget class="QPushButton" name="BtExit">

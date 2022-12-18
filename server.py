@@ -115,7 +115,7 @@ while 1:
         showThread = threading.Thread(target = server_show, args = (message,))
         showThread.start()
     elif message["method"] == "signup":
-        signupThread = threading.Thread(target = server_signup, arg = (message,))
+        signupThread = threading.Thread(target = server_signup, args = (message,))
         signupThread.start()
     elif message["method"] == "logout":
         logoutThread = threading.Thread(target = server_logout, args = (message,))

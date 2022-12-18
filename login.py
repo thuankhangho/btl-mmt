@@ -9,7 +9,7 @@ import pickle
 
 HEADER_LENGTH = 10
 
-serverIP = "192.168.1.14"
+serverIP = "192.168.1.2"
 
 class LogIn(object):
     #UI 'til line 202
@@ -187,14 +187,14 @@ class LogIn(object):
         self.Title.setText(_translate("LogIn", "LOG IN"))
         self.Username.setPlaceholderText(_translate("LogIn", "Username"))
         self.Password.setPlaceholderText(_translate("LogIn", "Password"))
-        self.BtSignIn.setText(_translate("LogIn", "Sign In"))
+        self.BtSignIn.setText(_translate("LogIn", "Log In"))
         self.BtForgotPassword.setText(_translate(
-            "LogIn", "Forgot your Usename or Password?"))
+            "LogIn", "Forgot your Username or Password?"))
         self.BtSignUp.setText(_translate("LogIn", "Sign Up"))
-        self.Txtnameapp.setText(_translate("LogIn", "ChatWithChad"))
-        self.Txthello1.setText(_translate("LogIn", "Hi, we are ChatWithChad!"))
-        self.Txthello2.setText(_translate("LogIn", "Welcome to our app!"))
-        self.Txthello3.setText(_translate("LogIn", "Have a good day with your chad!"))
+        self.Txtnameapp.setText(_translate("LogIn", "CHATWITHCHAD"))
+        self.Txthello1.setText(_translate("LogIn", "Welcome to Chat With Chad!"))
+        self.Txthello2.setText(_translate("LogIn", "A chat app for Chads!"))
+        self.Txthello3.setText(_translate("LogIn", "Have a good day with your Chads!"))
         self.BtExit.clicked.connect(self.exit)
         self.BtSignIn.clicked.connect(self.signin)
         self.BtSignUp.clicked.connect(self.signup)
@@ -204,7 +204,7 @@ class LogIn(object):
         if self.Username.text() == "" or self.Password.text() == "":
             mess = QMessageBox()
             mess.setIcon(QMessageBox.Warning)
-            mess.setText("Please make sure to fill in both your Username and Password correctly!")
+            mess.setText("Please make sure to fill in both your Username & Password correctly!")
             mess.exec_()
         else:
             print("Starting Client...")
