@@ -436,7 +436,7 @@ class Client(QtWidgets.QMainWindow):
             msg.setIcon(QMessageBox.Warning)
             msg.exec_()
         else:    
-            conn = Connection(arr, cilentSocket, 1)
+            conn = Connection(arr, cilentSocket)
             conn.render()
             self.connection[serverIP] = conn
     

@@ -2,6 +2,7 @@ import threading
 import socket
 import sys
 import time
+from tkinter import filedialog
 import requests
 from PyQt5 import QtWidgets,QtCore,QtGui
 from PyQt5.QtCore import QThread, pyqtSignal as Signal, pyqtSlot as Slot
@@ -172,9 +173,17 @@ class Connection(QtWidgets.QMainWindow):
         self.sendingData = True
         self.pushButton.setEnabled(False)
         self.File_Send.setEnabled(False)
+        
+        filetypes = (
+            ('text files', '*.txt'),
+            ('All files', '*.*')
+        )
+        filename = filedialog.askopenfilename(title='Open a file', initialdir='/', filetypes = filetypes)
+        self.Path.setText(filename.replace("/", chr(92)))
+        print(self.Path.text())
 
         #tạo thread cho file
-        self.dataLink = DataLink(self.cilentSocket,self.Path.text())
+        self.dataLink = DataLink(self.cilentSocket, self.Path.text())
         self.dataThread = QThread()
         self.dataLink.moveToThread(self.dataThread)
 
